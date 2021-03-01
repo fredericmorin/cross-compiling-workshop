@@ -17,19 +17,20 @@
 
 ## Benchmark
 
-script|target|compiler runtime(1)|first run(2)|after clean(3)|speed
--|-|-|-|-|-
-`build-native-manual.sh`|amd64|host|0.315s|0.307s|0.302s
-`build-native-cmake.sh`|amd64|host|0.572s|0.594s|0.033s
-`build-native-with-docker.sh`|amd64|host (inside docker)|43.458s|2.239s|1.464s
-`build-aarch64-with-cmake.sh`|aarch64|host|31.527s|30.661s|0.040s
-`build-aarch64-with-qemu.sh`|aarch64|aarch64 (inside proot)|94.758s|93.816s|2.990s
-`build-aarch64-with-docker.sh`|aarch64|aarch64 (inside docker)|173.833s|13.854s|5.226s
-`build-aarch64-with-native-docker.sh`|aarch64|host (inside docker)|74.967s|2.239s|1.965s
+script|target(1)|compiler runtime|suitable for CI(2)|first run(3)|after clean(4)|rebuild
+-|-|-|-|-|-|-
+`build-native-manual.sh`|amd64|host|no|0.315s|0.307s|0.302s
+`build-native-cmake.sh`|amd64|host|no|0.572s|0.594s|0.033s
+`build-native-with-docker.sh`|amd64|host (inside docker)|yes|43.458s|2.239s|1.464s
+`build-aarch64-with-cmake.sh`|aarch64|host|no|31.527s|30.661s|0.040s
+`build-aarch64-with-qemu.sh`|aarch64|aarch64 (inside proot)|no|94.758s|93.816s|2.990s
+`build-aarch64-with-docker.sh`|aarch64|aarch64 (inside docker)|yes|173.833s|13.854s|5.226s
+`build-aarch64-with-native-docker.sh`|aarch64|host (inside docker)|yes|74.967s|2.239s|1.965s
 
 1. assumes host to be a amd64 platform
-2. using `rm -rf workspace-build* && docker system prune --all --force` to wipe cache
-3. using `rm -rf workspace-build*`. Typical of a jenkins workspace cleanup
+1. for CI using docker to standardise build env accross builders
+1. using `rm -rf workspace-build* && docker system prune --all --force` to wipe cache
+1. using `rm -rf workspace-build*`. Typical of a jenkins workspace cleanup
 
 ## The App
 
@@ -42,13 +43,18 @@ Usage: app <pcapfile>
 
 ## Deps
 
-* Docker 19.03+
+* Docker
 
-  Docker version 19.03 or more recent is required to run CPU emulated container using buildx.
+* Docker 19.03+ (for script `build-aarch64-with-docker.sh`)
+
+  Docker version 19.03 or more recent is required cpu run CPU emulated container using `docker buildx`.
 
   See https://docs.docker.com/engine/install/ for installation instructions
 
-* ```sh
+* Additional host dependencies required (for scripts without `-docker` in their name)
+
+  On ubuntu:
+  ```sh
   sudo apt install -y \
     build-essential \
     cmake \
@@ -56,6 +62,7 @@ Usage: app <pcapfile>
     proot \
     qemu-user
   ```
+  Adapt for other distros
 
 ## Run all
 
