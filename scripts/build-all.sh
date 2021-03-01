@@ -2,15 +2,16 @@
 set -e
 
 PROJECT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." >/dev/null 2>&1 && pwd -P )"
-DOCKER_TAG="$USER/cross-compiling-workshop-ci"
 
 # --clean option
-[ "${1:-}" = "--clean" ] && rm -rf $PROJECT_ROOT/cmake-build-*
+[ "${1:-}" = "--clean" ] && rm -rf $PROJECT_ROOT/workspace-build-*
 
 BUILDS=""
 BUILDS="$BUILDS build-native-manual.sh"
 BUILDS="$BUILDS build-native-cmake.sh"
 BUILDS="$BUILDS build-native-with-docker.sh"
+BUILDS="$BUILDS build-aarch64-with-cmake.sh"
+BUILDS="$BUILDS build-aarch64-with-qemu.sh"
 
 for BUILD_SCRIPT in $BUILDS; do
     { echo -e "\n\n#################################" \

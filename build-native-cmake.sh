@@ -3,7 +3,7 @@ set -ex
 
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd -P )"
 SCRIPT_NAME="$( basename "${BASH_SOURCE[0]%.*}" )"
-BUILD_ROOT="$SCRIPT_ROOT/cmake-$SCRIPT_NAME"
+BUILD_ROOT="$SCRIPT_ROOT/workspace-$SCRIPT_NAME"
 
 mkdir -p "$BUILD_ROOT"
 

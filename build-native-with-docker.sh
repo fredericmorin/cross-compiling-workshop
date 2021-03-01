@@ -3,18 +3,20 @@ set -ex
 
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd -P )"
 SCRIPT_NAME="$( basename "${BASH_SOURCE[0]%.*}" )"
-BUILD_ROOT="$SCRIPT_ROOT/cmake-$SCRIPT_NAME"
+BUILD_ROOT="$SCRIPT_ROOT/workspace-$SCRIPT_NAME"
 DOCKER_TAG="$USER/cross-compiling-workshop-native"
+
+docker_image_exists() { docker inspect $1 >/dev/null 2>/dev/null; }
 
 mkdir -p "$BUILD_ROOT"
 
 # build builder
-cd "$SCRIPT_ROOT"
+docker_image_exists $DOCKER_TAG:builder || \
 docker build \
     --progress plain \
     --tag $DOCKER_TAG:builder \
     --target builder \
-    .
+    "$SCRIPT_ROOT"
 
 # compile using builder
 docker run -t \
@@ -28,12 +30,12 @@ docker run -t \
 [ "${1:-}" = "--no-run" ] && exit 0
 
 # build runtime
-cd "$SCRIPT_ROOT"
+docker_image_exists $DOCKER_TAG:runtime || \
 docker build \
     --progress plain \
     --tag $DOCKER_TAG:runtime \
     --target runtime \
-    .
+    "$SCRIPT_ROOT"
 
 # run docker qemu
 docker run -t \

@@ -4,6 +4,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 # build
         build-essential \
         cmake \
+        pkg-config \
 # deps
         libpcap-dev \
     && rm -rf /var/lib/apt/lists/*
