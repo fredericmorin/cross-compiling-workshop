@@ -1,4 +1,4 @@
-FROM ubuntu:latest as base
+FROM ubuntu:focal as base
 ENV DEBIAN_FRONTEND=noninteractive
 SHELL ["/bin/bash", "-c"]
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         wget \
     && rm -rf /var/lib/apt/lists/*
 RUN mkdir /chroot-armv8-a \
-    && wget -nv -O - https://partner-images.canonical.com/core/bionic/current/ubuntu-bionic-core-cloudimg-arm64-root.tar.gz \
+    && wget -nv -O - https://partner-images.canonical.com/core/focal/current/ubuntu-focal-core-cloudimg-arm64-root.tar.gz \
         | tar -zx -C /chroot-armv8-a/
 RUN proot -q qemu-aarch64 -S /chroot-armv8-a apt update \
     && proot -q qemu-aarch64 -S /chroot-armv8-a apt install -y \
@@ -31,9 +31,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         build-essential \
         cmake \
         ninja-build \
+        pkg-config \
 # cross compilation
-        g++-8-aarch64-linux-gnu \
+        g++-aarch64-linux-gnu \
     && rm -rf /var/lib/apt/lists/*
-RUN ln -s /usr/bin/aarch64-linux-gnu-gcc-8 /usr/bin/aarch64-linux-gnu-gcc \
-    && ln -s /usr/bin/aarch64-linux-gnu-g++-8 /usr/bin/aarch64-linux-gnu-g++
 COPY --from=chroot /chroot-armv8-a /chroot-armv8-a

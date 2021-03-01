@@ -32,6 +32,7 @@ docker build \
 
 # compile using builder
 docker run -t --rm \
+    --platform linux/arm64 \
     --user `id -u`:`id -g` -e HOME=/tmp \
     --volume "$SCRIPT_ROOT":"$SCRIPT_ROOT" \
     --workdir "$BUILD_ROOT" \
@@ -52,6 +53,7 @@ docker build \
 
 # run docker qemu
 docker run -t --rm \
+    --platform linux/arm64 \
     --user `id -u`:`id -g` -e HOME=/tmp \
     --volume "$SCRIPT_ROOT":"$SCRIPT_ROOT" \
     --workdir "$BUILD_ROOT" \

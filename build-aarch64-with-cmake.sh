@@ -3,7 +3,7 @@ set -ex
 
 SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd -P )"
 SCRIPT_NAME="$( basename "${BASH_SOURCE[0]%.*}" )"
-ROOTFS_PATH="bionic/current/ubuntu-bionic-core-cloudimg-arm64-root.tar.gz"
+ROOTFS_PATH="focal/current/ubuntu-focal-core-cloudimg-arm64-root.tar.gz"
 ROOTFS_URL="https://partner-images.canonical.com/core/$ROOTFS_PATH"
 
 BUILD_ROOT="$SCRIPT_ROOT/workspace-$SCRIPT_NAME"
@@ -37,4 +37,4 @@ cmake --build "$BUILD_ROOT" --target all
 
 # run in chroot with cpu emulation
 set -x
-proot -q qemu-aarch64 -R "$BUILD_ROOT/chroot/" "$BUILD_ROOT/app" "$SCRIPT_ROOT/dhcp.pcapng"
+proot -q qemu-aarch64 -R "$BUILD_ROOT/chroot/" -b "$SCRIPT_ROOT" "$BUILD_ROOT/app" "$SCRIPT_ROOT/dhcp.pcapng"

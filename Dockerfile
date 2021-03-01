@@ -1,18 +1,15 @@
-FROM ubuntu:latest as builder
+FROM ubuntu:focal as runtime
 ENV DEBIAN_FRONTEND=noninteractive
+SHELL ["/bin/bash", "-c"]
+RUN apt-get update && apt-get install --no-install-recommends -y \
+# deps
+        libpcap-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+FROM runtime as builder
 RUN apt-get update && apt-get install --no-install-recommends -y \
 # build
         build-essential \
         cmake \
         pkg-config \
-# deps
-        libpcap-dev \
     && rm -rf /var/lib/apt/lists/*
-SHELL ["/bin/bash", "-c"]
-
-FROM ubuntu:latest as runtime
-RUN apt-get update && apt-get install --no-install-recommends -y \
-# deps
-        libpcap-dev \
-    && rm -rf /var/lib/apt/lists/*
-SHELL ["/bin/bash", "-c"]

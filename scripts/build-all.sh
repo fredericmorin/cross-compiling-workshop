@@ -20,5 +20,5 @@ for BUILD_SCRIPT in $BUILDS; do
             "\n### $BUILD_SCRIPT" \
             "\n#################################\n\n"; } 2>/dev/null
 
-    time $PROJECT_ROOT/$BUILD_SCRIPT
+    time $PROJECT_ROOT/$BUILD_SCRIPT --run
 done
