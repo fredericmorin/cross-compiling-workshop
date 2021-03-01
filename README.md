@@ -1,4 +1,4 @@
-# The different levels of understanding of cross-compiling for a target platform
+# Experiment with different methods of cross compilating an app for aarch64 linux target
 
 ## Run
 
