@@ -10,13 +10,12 @@ DOCKER_TAG="$USER/cross-compiling-workshop-ci"
 BUILDS=""
 BUILDS="$BUILDS build-native-manual.sh"
 BUILDS="$BUILDS build-native-cmake.sh"
+BUILDS="$BUILDS build-native-with-docker.sh"
 
 for BUILD_SCRIPT in $BUILDS; do
-    SCRIPT_NAME="$( basename "${BUILD_SCRIPT%.*}" )"
-
     { echo -e "\n\n#################################" \
-            "\n### $SCRIPT_NAME" \
+            "\n### $BUILD_SCRIPT" \
             "\n#################################\n\n"; } 2>/dev/null
 
-    $PROJECT_ROOT/$BUILD_SCRIPT
+    time $PROJECT_ROOT/$BUILD_SCRIPT
 done

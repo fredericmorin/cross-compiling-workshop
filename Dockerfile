@@ -1,4 +1,4 @@
-FROM ubuntu:latest as ci
+FROM ubuntu:latest as builder
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install --no-install-recommends -y \
 # build
@@ -6,7 +6,12 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
         cmake \
 # deps
         libpcap-dev \
-# dind
-        docker.io \
+    && rm -rf /var/lib/apt/lists/*
+SHELL ["/bin/bash", "-c"]
+
+FROM ubuntu:latest as runtime
+RUN apt-get update && apt-get install --no-install-recommends -y \
+# deps
+        libpcap-dev \
     && rm -rf /var/lib/apt/lists/*
 SHELL ["/bin/bash", "-c"]
