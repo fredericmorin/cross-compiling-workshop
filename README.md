@@ -11,6 +11,7 @@ Goals:
   - `build-aarch64-with-qemu.sh`
   - `build-aarch64-with-cmake.sh`
 - cross compile using docker qemu
+  - `build-aarch64-with-docker.sh`
 - cross compile using toolchain in a docker generated rootfs
 
 ## Run
@@ -22,6 +23,7 @@ script|target|compiler runtime(1)|first run(2)|after clean(3)|speed
 `build-native-with-docker.sh`|amd64|host (inside docker)|43.458s|2.239s|1.464s
 `build-aarch64-with-cmake.sh`|aarch64|host|31.527s|30.661s|0.040s
 `build-aarch64-with-qemu.sh`|aarch64|aarch64 (inside proot)|94.758s|93.816s|2.990s
+`build-aarch64-with-docker.sh`|aarch64|aarch64 (inside docker)|173.833s|13.854s|5.226s
 
 1. assumes host to be a amd64 platform
 2. after `rm -rf workspace-build* && docker system prune --all --force`
