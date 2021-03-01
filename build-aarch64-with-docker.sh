@@ -31,7 +31,7 @@ docker build \
     "$SCRIPT_ROOT"
 
 # compile using builder
-docker run -t \
+docker run -t --rm \
     --user `id -u`:`id -g` -e HOME=/tmp \
     --volume "$SCRIPT_ROOT":"$SCRIPT_ROOT" \
     --workdir "$BUILD_ROOT" \
@@ -51,7 +51,7 @@ docker build \
     "$SCRIPT_ROOT"
 
 # run docker qemu
-docker run -t \
+docker run -t --rm \
     --user `id -u`:`id -g` -e HOME=/tmp \
     --volume "$SCRIPT_ROOT":"$SCRIPT_ROOT" \
     --workdir "$BUILD_ROOT" \

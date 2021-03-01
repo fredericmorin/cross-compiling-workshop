@@ -15,6 +15,7 @@ BUILDS="$BUILDS build-native-with-docker.sh"
 BUILDS="$BUILDS build-aarch64-with-cmake.sh"
 BUILDS="$BUILDS build-aarch64-with-qemu.sh"
 BUILDS="$BUILDS build-aarch64-with-docker.sh"
+BUILDS="$BUILDS build-aarch64-with-native-docker.sh"
 
 export TIMEFORMAT="%Rs"
 
