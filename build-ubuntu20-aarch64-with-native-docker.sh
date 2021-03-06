@@ -15,7 +15,7 @@ docker_image_exists $DOCKER_TAG || \
 docker build \
     --progress plain \
     --tag $DOCKER_TAG \
-    --file Dockerfile.native-aarch64-builder \
+    --file Dockerfile.native-ubuntu20-aarch64-builder \
     "$SCRIPT_ROOT"
 
 # compile using builder

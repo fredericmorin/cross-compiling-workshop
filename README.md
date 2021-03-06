@@ -1,4 +1,4 @@
-# Experiment with different methods of cross compilating an app for aarch64 linux target
+# Experiment with different methods of cross compiling for aarch64 linux target
 
 ## Run
 
@@ -21,11 +21,12 @@ script|target(1)|compiler runtime|suitable for CI(2)|first run(3)|after clean(4)
 -|-|-|-|-|-|-
 `build-native-manual.sh`|amd64|host|no|0.315s|0.307s|0.302s
 `build-native-cmake.sh`|amd64|host|no|0.572s|0.594s|0.033s
-`build-native-with-docker.sh`|amd64|host (inside docker)|yes|43.458s|2.239s|1.464s
-`build-aarch64-with-cmake.sh`|aarch64|host|no|31.527s|30.661s|0.040s
-`build-aarch64-with-qemu.sh`|aarch64|aarch64 (inside proot)|no|94.758s|93.816s|2.990s
-`build-aarch64-with-docker.sh`|aarch64|aarch64 (inside docker)|yes|173.833s|13.854s|5.226s
-`build-aarch64-with-native-docker.sh`|aarch64|host (inside docker)|yes|74.967s|2.239s|1.965s
+`build-ubuntu20-native-with-docker.sh`|amd64|host (inside docker)|yes|43.458s|2.239s|1.464s
+`build-ubuntu20-aarch64-with-cmake.sh`|aarch64|host|no|31.527s|30.661s|0.040s
+`build-ubuntu20-aarch64-with-qemu.sh`|aarch64|aarch64 (inside proot)|no|94.758s|93.816s|2.990s
+`build-ubuntu20-aarch64-with-docker.sh`|aarch64|aarch64 (inside docker)|yes|173.833s|13.854s|5.226s
+`build-ubuntu20-aarch64-with-native-docker.sh`|aarch64|host (inside docker)|yes|74.967s|2.239s|1.965s
+`build-rpi-armhf-with-cmake.sh`|armhf|host|no|71.621s|73.514s|0.060s
 
 1. assumes host to be a amd64 platform
 1. for CI using docker to standardise build env accross builders
@@ -45,7 +46,7 @@ Usage: app <pcapfile>
 
 * Docker
 
-* Docker 19.03+ (for script `build-aarch64-with-docker.sh`)
+* Docker 19.03+ (for scripts `*-docker.sh`)
 
   Docker version 19.03 or more recent is required cpu run CPU emulated container using `docker buildx`.
 
@@ -59,6 +60,7 @@ Usage: app <pcapfile>
     build-essential \
     cmake \
     g++-aarch64-linux-gnu \
+    g++-arm-linux-gnueabihf \
     proot \
     qemu-user
   ```
